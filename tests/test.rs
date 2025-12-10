@@ -3,17 +3,20 @@ use assert_cmd::Command;
 use std::fs;
 use std::path::PathBuf;
 
-fn setup_test() -> PathBuf {
+// Global setup - runs once before any tests
+#[ctor::ctor]
+fn setup() {
     let output_dir = PathBuf::from("tests/output");
     // Clean up any existing output directory
     if output_dir.exists() {
-        fs::remove_dir_all(&output_dir).expect("Failed to remove output directory");
+        fs::remove_dir_all(&output_dir).ok();
     }
     fs::create_dir_all(&output_dir).expect("Failed to create output directory");
-    output_dir
 }
 
-fn cleanup_test() {
+// Global cleanup - runs once after all tests complete
+#[ctor::dtor]
+fn cleanup() {
     let output_dir = PathBuf::from("tests/output");
     if output_dir.exists() {
         fs::remove_dir_all(&output_dir).ok();
@@ -47,8 +50,6 @@ fn check_stderr(stderr: &[u8]) {
 
 #[test]
 fn test_plain() {
-    setup_test();
-    
     let suffix = "plain";
     let mut cmd = Command::cargo_bin("maple_to_vcf").unwrap();
     
@@ -67,14 +68,10 @@ fn test_plain() {
         &format!("tests/output/test_{}.vcf", suffix),
         &format!("tests/expected/test_{}.vcf", suffix),
     );
-    
-    cleanup_test();
 }
 
 #[test]
 fn test_exclude() {
-    setup_test();
-    
     let suffix = "exclude";
     let mut cmd = Command::cargo_bin("maple_to_vcf").unwrap();
     
@@ -95,14 +92,10 @@ fn test_exclude() {
         &format!("tests/output/test_{}.vcf", suffix),
         &format!("tests/expected/test_{}.vcf", suffix),
     );
-    
-    cleanup_test();
 }
 
 #[test]
 fn test_min_maf() {
-    setup_test();
-    
     let suffix = "min_maf";
     let mut cmd = Command::cargo_bin("maple_to_vcf").unwrap();
     
@@ -123,14 +116,10 @@ fn test_min_maf() {
         &format!("tests/output/test_{}.vcf", suffix),
         &format!("tests/expected/test_{}.vcf", suffix),
     );
-    
-    cleanup_test();
 }
 
 #[test]
 fn test_min_maf_exclude() {
-    setup_test();
-    
     let suffix = "min_maf_exclude";
     let mut cmd = Command::cargo_bin("maple_to_vcf").unwrap();
     
@@ -153,14 +142,10 @@ fn test_min_maf_exclude() {
         &format!("tests/output/test_{}.vcf", suffix),
         &format!("tests/expected/test_{}.vcf", suffix),
     );
-    
-    cleanup_test();
 }
 
 #[test]
 fn test_high_min_maf() {
-    setup_test();
-    
     let suffix = "high_min_maf";
     let mut cmd = Command::cargo_bin("maple_to_vcf").unwrap();
     
@@ -181,14 +166,10 @@ fn test_high_min_maf() {
         &format!("tests/output/test_{}.vcf", suffix),
         &format!("tests/expected/test_{}.vcf", suffix),
     );
-    
-    cleanup_test();
 }
 
 #[test]
 fn test_high_min_maf_exclude() {
-    setup_test();
-    
     let suffix = "high_min_maf_exclude";
     let mut cmd = Command::cargo_bin("maple_to_vcf").unwrap();
     
@@ -211,14 +192,10 @@ fn test_high_min_maf_exclude() {
         &format!("tests/output/test_{}.vcf", suffix),
         &format!("tests/expected/test_{}.vcf", suffix),
     );
-    
-    cleanup_test();
 }
 
 #[test]
 fn test_min_non_n() {
-    setup_test();
-    
     let suffix = "min_non_N";
     let mut cmd = Command::cargo_bin("maple_to_vcf").unwrap();
     
@@ -239,14 +216,10 @@ fn test_min_non_n() {
         &format!("tests/output/test_{}.vcf", suffix),
         &format!("tests/expected/test_{}.vcf", suffix),
     );
-    
-    cleanup_test();
 }
 
 #[test]
 fn test_min_non_n_exclude() {
-    setup_test();
-    
     let suffix = "min_non_N_exclude";
     let mut cmd = Command::cargo_bin("maple_to_vcf").unwrap();
     
@@ -269,6 +242,4 @@ fn test_min_non_n_exclude() {
         &format!("tests/output/test_{}.vcf", suffix),
         &format!("tests/expected/test_{}.vcf", suffix),
     );
-    
-    cleanup_test();
 }
