@@ -1,2 +1,2 @@
-Invalid MAPLE file format in ./input/ref.fasta, skipping.
-File ./input/exclude.txt does not start with '>', skipping.
+Invalid MAPLE file format in tests/input/ref.fasta, skipping.
+File tests/input/exclude.txt does not start with '>', skipping.

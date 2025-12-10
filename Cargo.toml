@@ -8,7 +8,9 @@ clap = { version = "4.5", features = ["derive"] }
 anyhow = "1.0"
 flate2 = "1.0"
 bio = "2.0"
+assert_cmd = "2.1.1"
+ctor = "0.6.3"
 
 [[bin]]
-name = "maple-to-vcf"
+name = "maple_to_vcf"
 path = "src/main.rs"

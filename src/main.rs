@@ -166,7 +166,8 @@ fn build_vcf_records(
     let sample_count = sample_ids.len();
     let mut vcf: HashMap<usize, VcfRecord> = HashMap::new();
 
-    for (sample_id, snvs) in maple_data {
+    for sample_id in sample_ids {
+        let snvs = &maple_data[sample_id];
         let ix = sample_ids.iter().position(|id| id == sample_id).unwrap();
 
         for snv in snvs {
@@ -310,7 +311,13 @@ fn write_vcf<W: Write>(
         let alt_bases = if record.alt.is_empty() {
             "*".to_string()
         } else {
-            record.alt.iter().collect::<String>()
+            record.alt.iter().fold(String::new(), |mut acc, &c| {
+                if !acc.is_empty() {
+                    acc.push(',');
+                }
+                acc.push(c);
+                acc
+            })
         };
 
         let (info_str, maf, non_n_count) = make_info_field(record, sample_count);
@@ -408,7 +415,7 @@ fn main() -> Result<()> {
         HashSet::new()
     };
 
-    let mut reader = fasta::Reader::from_file(&args.ref_fasta)?;
+    let reader = fasta::Reader::from_file(&args.ref_fasta)?;
     let records: Vec<_> = reader.records().collect::<Result<_, _>>()?;
 
     if records.len() != 1 {
