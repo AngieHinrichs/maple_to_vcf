@@ -14,7 +14,7 @@ suffix=plain
     --output output/test_$suffix.vcf \
     2> output/test_$suffix.stderr
 diff output/test_$suffix.vcf expected/test_$suffix.vcf
-diff output/test_$suffix.stderr expected/test_all.stderr
+diff output/test_$suffix.stderr expected/test_all.py.stderr
 
 # Exclude sample but no other filters
 suffix=exclude
@@ -25,7 +25,7 @@ suffix=exclude
     --output output/test_$suffix.vcf \
     2> output/test_$suffix.stderr
 diff output/test_$suffix.vcf expected/test_$suffix.vcf
-diff output/test_$suffix.stderr expected/test_all.stderr
+diff output/test_$suffix.stderr expected/test_all.py.stderr
 
 # Min minor allele frequency filter, no exclude
 suffix=min_maf
@@ -36,7 +36,7 @@ suffix=min_maf
     --output output/test_$suffix.vcf \
     2> output/test_$suffix.stderr
 diff output/test_$suffix.vcf expected/test_$suffix.vcf
-diff output/test_$suffix.stderr expected/test_all.stderr
+diff output/test_$suffix.stderr expected/test_all.py.stderr
 
 # Min minor allele frequency filter with exclude
 suffix=min_maf_exclude
@@ -48,7 +48,7 @@ suffix=min_maf_exclude
     --output output/test_$suffix.vcf \
     2> output/test_$suffix.stderr
 diff output/test_$suffix.vcf expected/test_$suffix.vcf
-diff output/test_$suffix.stderr expected/test_all.stderr
+diff output/test_$suffix.stderr expected/test_all.py.stderr
 
 # Higher minor allele frequency filter, no exclude
 suffix=high_min_maf
@@ -59,7 +59,7 @@ suffix=high_min_maf
     --output output/test_$suffix.vcf \
     2> output/test_$suffix.stderr
 diff output/test_$suffix.vcf expected/test_$suffix.vcf
-diff output/test_$suffix.stderr expected/test_all.stderr
+diff output/test_$suffix.stderr expected/test_all.py.stderr
 
 # Higher minor allele frequency filter with exclude
 suffix=high_min_maf_exclude
@@ -71,7 +71,7 @@ suffix=high_min_maf_exclude
     --output output/test_$suffix.vcf \
     2> output/test_$suffix.stderr
 diff output/test_$suffix.vcf expected/test_$suffix.vcf
-diff output/test_$suffix.stderr expected/test_all.stderr
+diff output/test_$suffix.stderr expected/test_all.py.stderr
 
 # Min non-N proportion filter, no exclude
 suffix=min_non_N
@@ -82,7 +82,7 @@ suffix=min_non_N
     --output output/test_$suffix.vcf \
     2> output/test_$suffix.stderr
 diff output/test_$suffix.vcf expected/test_$suffix.vcf
-diff output/test_$suffix.stderr expected/test_all.stderr
+diff output/test_$suffix.stderr expected/test_all.py.stderr
 
 # Min non-N proportion filter with exclude
 suffix=min_non_N_exclude
@@ -94,7 +94,7 @@ suffix=min_non_N_exclude
     --output output/test_$suffix.vcf \
     2> output/test_$suffix.stderr
 diff output/test_$suffix.vcf expected/test_$suffix.vcf
-diff output/test_$suffix.stderr expected/test_all.stderr
+diff output/test_$suffix.stderr expected/test_all.py.stderr
 
 echo "All tests passed."
 
