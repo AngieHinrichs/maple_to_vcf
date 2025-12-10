@@ -1,0 +1,14 @@
+[package]
+name = "maple_to_vcf"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+clap = { version = "4.5", features = ["derive"] }
+anyhow = "1.0"
+flate2 = "1.0"
+bio = "2.0"
+
+[[bin]]
+name = "maple-to-vcf"
+path = "src/main.rs"
