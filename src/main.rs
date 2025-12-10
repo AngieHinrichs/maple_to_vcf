@@ -45,14 +45,14 @@ struct Snv {
 #[derive(Debug, Clone)]
 struct VcfRecord {
     alt: Vec<char>,
-    genotypes: Vec<String>,
+    genotypes: Vec<char>,
 }
 
 impl VcfRecord {
     fn new(sample_count: usize) -> Self {
         VcfRecord {
             alt: Vec::new(),
-            genotypes: vec!["0".to_string(); sample_count],
+            genotypes: vec!['0'; sample_count],
         }
     }
 }
@@ -176,8 +176,8 @@ fn build_vcf_records(
                 .or_insert_with(|| VcfRecord::new(sample_count));
 
             if snv.alt_base == 'N' {
-                // Don't add N as an alt base, just set genotype to "."
-                record.genotypes[ix] = ".".to_string();
+                // Don't add N as an alt base, just set genotype to '.'
+                record.genotypes[ix] = '.';
             } else {
                 // Add alt base if not already present
                 if !record.alt.contains(&snv.alt_base) {
@@ -185,7 +185,16 @@ fn build_vcf_records(
                 }
                 // Set genotype to 1 + index of alt_base in alt list
                 let alt_index = record.alt.iter().position(|&c| c == snv.alt_base).unwrap();
-                record.genotypes[ix] = (alt_index + 1).to_string();
+                let gt_str = (alt_index + 1).to_string();
+                if gt_str.len() != 1 {
+                    eprintln!(
+                        "Warning: More than 9 alt alleles at position {}, \
+                         genotype representation may be incorrect.  This should be impossible for SNVs.",
+                        snv.position
+                    );
+                    std::process::exit(1);
+                }
+                record.genotypes[ix] = gt_str.chars().next().unwrap();
             }
         }
     }
@@ -194,12 +203,12 @@ fn build_vcf_records(
 }
 
 fn make_info_field(record: &VcfRecord, sample_count: usize) -> (String, f64, usize) {
-    let n_count = record.genotypes.iter().filter(|&gt| gt == ".").count();
+    let n_count = record.genotypes.iter().filter(|&gt| *gt == '.').count();
     let mut alt_counts = vec![0; record.alt.len()];
 
     for gt in &record.genotypes {
-        if gt != "." && gt != "0" {
-            if let Ok(idx) = gt.parse::<usize>() {
+        if *gt != '.' && *gt != '0' {
+            if let Ok(idx) = gt.to_string().parse::<usize>() {
                 if idx > 0 && idx <= alt_counts.len() {
                     alt_counts[idx - 1] += 1;
                 }
@@ -340,7 +349,7 @@ fn write_vcf<W: Write>(
             info_str,
             "GT".to_string(),
         ];
-        vcf_line.extend(record.genotypes.clone());
+        vcf_line.extend(record.genotypes.iter().map(|&gt| gt.to_string()));
 
         writeln!(writer, "{}", vcf_line.join("\t"))?;
     }
