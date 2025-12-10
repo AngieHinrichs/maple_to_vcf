@@ -28,7 +28,8 @@ fn compare_files(output_path: &str, expected_path: &str) {
         .unwrap_or_else(|_| panic!("Failed to read output file: {}", output_path))
         .replace("\r\n", "\n");
     let expected = fs::read_to_string(expected_path)
-        .unwrap_or_else(|_| panic!("Failed to read expected file: {}", expected_path));
+        .unwrap_or_else(|_| panic!("Failed to read expected file: {}", expected_path))
+        .replace("\r\n", "\n");
     
     assert_eq!(
         output, expected,
