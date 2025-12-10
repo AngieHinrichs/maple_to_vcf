@@ -67,7 +67,8 @@ def build_vcf_records(maple_data: dict, sample_ids: list):
     """Build up a dict mapping positions to VCF alt bases and genotypes."""
     sample_count = len(sample_ids)
     vcf = {}
-    for sample_id, snvs in maple_data.items():
+    for sample_id in sample_ids:
+        snvs = maple_data[sample_id]
         for position, alt_base in snvs:
             # For each SNV (or N), update the VCF alt and genotypes at that position
             ix = sample_ids.index(sample_id)
