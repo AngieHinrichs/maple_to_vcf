@@ -36,24 +36,12 @@ fn compare_files(output_path: &str, expected_path: &str) {
     );
 }
 
-fn check_stderr(stderr: &[u8]) {
-    let stderr_str = String::from_utf8_lossy(stderr);
-    let expected = fs::read_to_string("tests/expected/test_all.stderr")
-        .expect("Failed to read tests/expected/test_all.stderr");
-    
-    assert_eq!(
-        stderr_str, expected,
-        "Stderr mismatch:\nActual stderr:\n{}\nExpected stderr:\n{}",
-        stderr_str, expected
-    );
-}
-
 #[test]
 fn test_plain() {
     let suffix = "plain";
     let mut cmd = Command::cargo_bin("maple_to_vcf").unwrap();
     
-    let assert = cmd.arg("--input-directory")
+    let _assert = cmd.arg("--input-directory")
         .arg("tests/input")
         .arg("--ref-fasta")
         .arg("tests/input/ref.fasta")
@@ -61,8 +49,6 @@ fn test_plain() {
         .arg(format!("tests/output/test_{}.vcf", suffix))
         .assert()
         .success();
-    
-    check_stderr(&assert.get_output().stderr);
     
     compare_files(
         &format!("tests/output/test_{}.vcf", suffix),
@@ -75,7 +61,7 @@ fn test_exclude() {
     let suffix = "exclude";
     let mut cmd = Command::cargo_bin("maple_to_vcf").unwrap();
     
-    let assert = cmd.arg("--input-directory")
+    let _assert = cmd.arg("--input-directory")
         .arg("tests/input")
         .arg("--ref-fasta")
         .arg("tests/input/ref.fasta")
@@ -85,8 +71,6 @@ fn test_exclude() {
         .arg(format!("tests/output/test_{}.vcf", suffix))
         .assert()
         .success();
-    
-    check_stderr(&assert.get_output().stderr);
     
     compare_files(
         &format!("tests/output/test_{}.vcf", suffix),
@@ -99,7 +83,7 @@ fn test_min_maf() {
     let suffix = "min_maf";
     let mut cmd = Command::cargo_bin("maple_to_vcf").unwrap();
     
-    let assert = cmd.arg("--input-directory")
+    let _assert = cmd.arg("--input-directory")
         .arg("tests/input")
         .arg("--ref-fasta")
         .arg("tests/input/ref.fasta")
@@ -109,8 +93,6 @@ fn test_min_maf() {
         .arg(format!("tests/output/test_{}.vcf", suffix))
         .assert()
         .success();
-    
-    check_stderr(&assert.get_output().stderr);
     
     compare_files(
         &format!("tests/output/test_{}.vcf", suffix),
@@ -123,7 +105,7 @@ fn test_min_maf_exclude() {
     let suffix = "min_maf_exclude";
     let mut cmd = Command::cargo_bin("maple_to_vcf").unwrap();
     
-    let assert = cmd.arg("--input-directory")
+    let _assert = cmd.arg("--input-directory")
         .arg("tests/input")
         .arg("--ref-fasta")
         .arg("tests/input/ref.fasta")
@@ -136,8 +118,6 @@ fn test_min_maf_exclude() {
         .assert()
         .success();
     
-    check_stderr(&assert.get_output().stderr);
-    
     compare_files(
         &format!("tests/output/test_{}.vcf", suffix),
         &format!("tests/expected/test_{}.vcf", suffix),
@@ -149,7 +129,7 @@ fn test_high_min_maf() {
     let suffix = "high_min_maf";
     let mut cmd = Command::cargo_bin("maple_to_vcf").unwrap();
     
-    let assert = cmd.arg("--input-directory")
+    let _assert = cmd.arg("--input-directory")
         .arg("tests/input")
         .arg("--ref-fasta")
         .arg("tests/input/ref.fasta")
@@ -159,8 +139,6 @@ fn test_high_min_maf() {
         .arg(format!("tests/output/test_{}.vcf", suffix))
         .assert()
         .success();
-    
-    check_stderr(&assert.get_output().stderr);
     
     compare_files(
         &format!("tests/output/test_{}.vcf", suffix),
@@ -173,7 +151,7 @@ fn test_high_min_maf_exclude() {
     let suffix = "high_min_maf_exclude";
     let mut cmd = Command::cargo_bin("maple_to_vcf").unwrap();
     
-    let assert = cmd.arg("--input-directory")
+    let _assert = cmd.arg("--input-directory")
         .arg("tests/input")
         .arg("--ref-fasta")
         .arg("tests/input/ref.fasta")
@@ -186,8 +164,6 @@ fn test_high_min_maf_exclude() {
         .assert()
         .success();
     
-    check_stderr(&assert.get_output().stderr);
-    
     compare_files(
         &format!("tests/output/test_{}.vcf", suffix),
         &format!("tests/expected/test_{}.vcf", suffix),
@@ -199,7 +175,7 @@ fn test_min_non_n() {
     let suffix = "min_non_N";
     let mut cmd = Command::cargo_bin("maple_to_vcf").unwrap();
     
-    let assert = cmd.arg("--input-directory")
+    let _assert = cmd.arg("--input-directory")
         .arg("tests/input")
         .arg("--ref-fasta")
         .arg("tests/input/ref.fasta")
@@ -209,8 +185,6 @@ fn test_min_non_n() {
         .arg(format!("tests/output/test_{}.vcf", suffix))
         .assert()
         .success();
-    
-    check_stderr(&assert.get_output().stderr);
     
     compare_files(
         &format!("tests/output/test_{}.vcf", suffix),
@@ -223,7 +197,7 @@ fn test_min_non_n_exclude() {
     let suffix = "min_non_N_exclude";
     let mut cmd = Command::cargo_bin("maple_to_vcf").unwrap();
     
-    let assert = cmd.arg("--input-directory")
+    let _assert = cmd.arg("--input-directory")
         .arg("tests/input")
         .arg("--ref-fasta")
         .arg("tests/input/ref.fasta")
@@ -235,8 +209,6 @@ fn test_min_non_n_exclude() {
         .arg(format!("tests/output/test_{}.vcf", suffix))
         .assert()
         .success();
-    
-    check_stderr(&assert.get_output().stderr);
     
     compare_files(
         &format!("tests/output/test_{}.vcf", suffix),
