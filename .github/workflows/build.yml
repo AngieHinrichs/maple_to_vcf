@@ -55,7 +55,7 @@ jobs:
     runs-on: ${{ matrix.platform.runs-on }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Build binary and run tests
         uses: houseabsolute/actions-rust-cross@v0
         with:
@@ -64,7 +64,7 @@ jobs:
           args: "--locked --release"
           strip: true
       - name: Upload binary as artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: maple_to_vcf-${{ matrix.platform.target }}
           path: target/${{ matrix.platform.target }}/release/maple_to_vcf${{ matrix.platform.exe-suffix }}
