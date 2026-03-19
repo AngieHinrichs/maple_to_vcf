@@ -57,7 +57,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
       - name: Build binary and run tests
-        uses: houseabsolute/actions-rust-cross@v0
+        uses: houseabsolute/actions-rust-cross@v1
         with:
           command: both
           target: ${{ matrix.platform.target }}
