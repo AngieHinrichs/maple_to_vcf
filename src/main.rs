@@ -57,12 +57,23 @@ impl VcfRecord {
     }
 }
 
+fn open_maybe_decompress(file_path: &Path) -> Result<Box<dyn BufRead>> {
+    let file = File::open(file_path)
+        .with_context(|| format!("Failed to open file: {}", file_path.display()))?;
+
+    if file_path.extension().and_then(|s| s.to_str()) == Some("gz") {
+        let decoder = flate2::read::GzDecoder::new(file);
+        Ok(Box::new(BufReader::new(decoder)))
+    } else {
+        Ok(Box::new(BufReader::new(file)))
+    }
+}
+
 fn parse_maple_file(
     file_path: &Path,
     exclude_ids: &HashSet<String>,
 ) -> Result<Option<(String, Vec<Snv>)>> {
-    let file = File::open(file_path)
-        .with_context(|| format!("Failed to open file: {}", file_path.display()))?;
+    let file = open_maybe_decompress(file_path)?;
     let reader = BufReader::new(file);
     let mut lines = reader.lines();
 
