@@ -4,7 +4,7 @@ maple_to_vcf converts a given directory containing MAPLE/"diff" files and a refe
 
 ## Installation
 
-For now, go to https://github.com/AngieHinrichs/maple_to_vcf/actions/runs/20116785061 (I haven't done a proper release yet) and click to download the package for your OS and architecture.
+For now, go to https://github.com/AngieHinrichs/maple_to_vcf/actions/runs/23318589911 (I haven't done a proper release yet) and click to download the package for your OS and architecture.
 For example, if you are on a Linux machine and `uname -m` says `x86_64`, then download maple_to_vcf-x86_64-unknown-linux-gnu.
 That will download the file maple_to_vcf-x86_64-unknown-linux-gnu.zip to your machine; unzip that to get the maple_to_vcf executable.
 
